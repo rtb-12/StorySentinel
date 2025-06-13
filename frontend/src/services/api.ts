@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import type { AxiosResponse } from "axios";
 
 // API client configuration
 const API_BASE_URL =

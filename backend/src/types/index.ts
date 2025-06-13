@@ -1,173 +1,108 @@
-export interface IPAsset {
-  id: string;
-  title: string;
-  description: string;
-  type: "image" | "video" | "audio" | "document";
-  fileUrl: string;
-  thumbnailUrl?: string;
-  metadata: {
-    originalFileName: string;
-    fileSize: number;
-    mimeType: string;
-    dimensions?: {
-      width: number;
-      height: number;
-    };
-    duration?: number;
-  };
-  storyData: {
-    ipAssetId?: string;
-    tokenId?: string;
-    contractAddress?: string;
-    transactionHash?: string;
-    registrationTx?: string;
-  };
-  yakoaData?: {
-    tokenId?: string;
-    registrationHash?: string;
-  };
-  licensing: {
-    type: "commercial" | "non-commercial" | "custom";
-    terms: string;
-    royaltyPercentage?: number;
-    allowDerivatives: boolean;
-  };
-  owner: string;
-  collaborators?: string[];
-  status: "draft" | "registering" | "active" | "disputed" | "suspended";
-  createdAt: Date;
-  updatedAt: Date;
+// Types for Yakoa API integration
+
+export interface YakoaTokenId {
+  chain: string;
+  contract_address: string;
+  token_id: string;
 }
 
-export interface Alert {
-  id: string;
-  ipAssetId: string;
-  title: string;
-  description: string;
-  similarity: number;
-  confidence: number;
-  source: {
+export interface YakoaRegistrationTx {
+  hash: string;
+  block_number: number;
+  timestamp: string;
+  chain: string;
+}
+
+export interface YakoaLicenseParent {
+  parent_token_id: YakoaTokenId;
+  license_id: string;
+}
+
+export interface YakoaAuthorization {
+  brand_id: string;
+  brand_name: string;
+  data: {
+    type: "email";
+    email_address: string;
+  };
+}
+
+export interface YakoaMedia {
+  media_id: string;
+  url: string;
+  hash: string;
+  trust_reason: {
+    type: "trusted_platform";
+    platform_name: string;
+  };
+  fetch_status: "pending" | "success" | "failed";
+  uri_id: string;
+}
+
+export interface YakoaInfringements {
+  status: "pending" | "completed" | "failed";
+  reasons: string[];
+}
+
+export interface YakoaTokenRegistrationRequest {
+  id: string; // Changed from YakoaTokenId to string
+  registration_tx: YakoaRegistrationTx;
+  creator_id: string; // Must match pattern '^0x[a-f0-9]{40}$'
+  metadata: Record<string, unknown>;
+  license_parents?: YakoaLicenseParent[];
+  token_authorizations?: YakoaAuthorization[];
+  creator_authorizations?: YakoaAuthorization[];
+  media: Array<{
+    media_id: string; // Required field
     url: string;
-    platform: string;
-    timestamp: Date;
-    domain: string;
-  };
-  suspectContent: {
-    imageUrl?: string;
-    videoUrl?: string;
-    audioUrl?: string;
-    description?: string;
-  };
-  yakoaData: {
-    matchId: string;
-    detectionMethod: string;
-    analysisData: Record<string, any>;
-  };
-  status: "new" | "reviewed" | "disputed" | "resolved" | "ignored";
-  priority: "low" | "medium" | "high" | "critical";
-  assignedTo?: string;
-  actions: {
-    actionType: "viewed" | "escalated" | "ignored" | "disputed";
-    timestamp: Date;
-    userId: string;
-    notes?: string;
-  }[];
-  createdAt: Date;
-  updatedAt: Date;
+    hash: string; // Must match pattern '^[a-f0-9]{64}$'
+    trust_reason: {
+      type: "trusted_platform";
+      platform_name: string;
+    };
+  }>;
 }
 
-export interface Dispute {
-  id: string;
-  ipAssetId: string;
-  alertId?: string;
+export interface YakoaTokenRegistrationResponse {
+  id: string; // Changed from YakoaTokenId to string to match request
+  registration_tx: YakoaRegistrationTx;
+  creator_id: string;
+  metadata: Record<string, unknown>;
+  license_parents: YakoaLicenseParent[];
+  token_authorizations: YakoaAuthorization[];
+  creator_authorizations: YakoaAuthorization[];
+  media: YakoaMedia[];
+  infringements: YakoaInfringements;
+}
+
+export interface YakoaTokenResponse {
+  id: string; // Changed from YakoaTokenId to string to match request
+  registration_tx: YakoaRegistrationTx;
+  creator_id: string;
+  metadata: Record<string, unknown>;
+  license_parents: YakoaLicenseParent[];
+  token_authorizations: YakoaAuthorization[];
+  creator_authorizations: YakoaAuthorization[];
+  media: YakoaMedia[];
+  infringements: YakoaInfringements;
+}
+
+// Story Protocol types
+export interface StoryProtocolResult {
+  spgNftContract?: string;
+  tokenId?: string;
+  txHash?: string;
+  blockNumber?: number;
+  ipHash?: string;
+}
+
+export interface IPMetadata {
   title: string;
   description: string;
-  disputeType: "infringement" | "licensing" | "ownership" | "takedown";
-  status: "pending" | "in-progress" | "resolved" | "rejected" | "escalated";
-  priority: "low" | "medium" | "high" | "critical";
-  evidence: {
-    id: string;
-    type: "image" | "document" | "url" | "transaction" | "screenshot";
-    title: string;
-    url?: string;
-    description?: string;
-    uploadedAt: Date;
-  }[];
-  respondent: {
-    platform: string;
-    identifier: string;
-    contact?: string;
-    walletAddress?: string;
-  };
-  storyData?: {
-    disputeId?: string;
-    transactionHash?: string;
-  };
-  timeline: {
-    id: string;
-    date: Date;
-    action: string;
-    actor: string;
-    description: string;
-    metadata?: Record<string, any>;
-  }[];
-  outcome?: {
-    result: "won" | "lost" | "settled";
-    compensation?: string;
-    terms?: string;
-    enforcementActions?: string[];
-  };
-  createdBy: string;
-  assignedTo?: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface YakoaResponse {
-  success: boolean;
-  data?: any;
-  error?: string;
-  statusCode: number;
-}
-
-export interface StoryProtocolResponse {
-  success: boolean;
-  data?: any;
-  error?: string;
-  transactionHash?: string;
-}
-
-export interface AnalyticsData {
-  overview: {
-    totalAssets: number;
-    totalScans: number;
-    alertsGenerated: number;
-    disputesWon: number;
-    protectionScore: number;
-  };
-  trends: {
-    scansOverTime: {
-      date: string;
-      scans: number;
-      alerts: number;
-    }[];
-    topInfringedAssets: {
-      id: string;
-      name: string;
-      infringements: number;
-      resolved: number;
-    }[];
-    platformBreakdown: {
-      platform: string;
-      count: number;
-      percentage: number;
-    }[];
-    topInfringers: {
-      identifier: string;
-      platform: string;
-      violations: number;
-    }[];
-  };
-  timeRange: "7d" | "30d" | "90d" | "1y";
-  generatedAt: Date;
+  creators: Array<{
+    name: string;
+    address: string;
+    contributionPercent: number;
+  }>;
+  [key: string]: unknown;
 }

@@ -10,8 +10,9 @@ import {
   Search,
   MoreVertical,
   Shield,
-  Globe,
-  User,
+  TrendingUp,
+  Zap,
+  Play,
 } from "lucide-react";
 
 interface Alert {
@@ -136,327 +137,352 @@ const AlertsLog: React.FC = () => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "critical":
-        return "text-red-600 bg-red-100";
+        return "from-red-500 to-pink-500";
       case "high":
-        return "text-orange-600 bg-orange-100";
+        return "from-orange-500 to-red-500";
       case "medium":
-        return "text-yellow-600 bg-yellow-100";
+        return "from-yellow-500 to-orange-500";
       case "low":
-        return "text-green-600 bg-green-100";
+        return "from-blue-500 to-cyan-500";
       default:
-        return "text-gray-600 bg-gray-100";
+        return "from-gray-500 to-gray-600";
     }
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case "new":
-        return "text-blue-600 bg-blue-100";
+        return <Zap className="h-4 w-4 text-blue-500" />;
       case "reviewed":
-        return "text-purple-600 bg-purple-100";
+        return <Eye className="h-4 w-4 text-yellow-500" />;
       case "disputed":
-        return "text-red-600 bg-red-100";
+        return <AlertTriangle className="h-4 w-4 text-red-500" />;
       case "resolved":
-        return "text-green-600 bg-green-100";
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
       case "ignored":
-        return "text-gray-600 bg-gray-100";
+        return <X className="h-4 w-4 text-gray-500" />;
       default:
-        return "text-gray-600 bg-gray-100";
+        return <Clock className="h-4 w-4 text-gray-400" />;
     }
-  };
-
-  const getSimilarityColor = (similarity: number) => {
-    if (similarity >= 90) return "text-red-600";
-    if (similarity >= 75) return "text-orange-600";
-    if (similarity >= 60) return "text-yellow-600";
-    return "text-green-600";
   };
 
   const filteredAlerts = alerts.filter((alert) => {
-    const matchesSearch =
-      alert.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      alert.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter =
-      filter === "all" || alert.status === filter || alert.priority === filter;
-    return matchesSearch && matchesFilter;
+    const matchesFilter = filter === "all" || alert.status === filter;
+    const matchesSearch = alert.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return matchesFilter && matchesSearch;
   });
 
-  const handleBulkAction = (action: string) => {
-    console.log(`Bulk action: ${action} for alerts:`, selectedAlerts);
-    // Here you would implement the bulk action logic
-    setSelectedAlerts([]);
+  const handleSelectAlert = (alertId: string) => {
+    setSelectedAlerts((prev) =>
+      prev.includes(alertId)
+        ? prev.filter((id) => id !== alertId)
+        : [...prev, alertId]
+    );
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            Infringement Alerts
-          </h1>
-          <p className="text-gray-600">
-            Monitor and respond to potential IP violations
-          </p>
-        </div>
-        <div className="flex space-x-2">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center">
-            <Search className="h-4 w-4 mr-2" />
-            Manual Scan
-          </button>
-        </div>
-      </div>
-
-      {/* Search and Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search alerts..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        >
-          <option value="all">All Status</option>
-          <option value="new">New</option>
-          <option value="reviewed">Reviewed</option>
-          <option value="disputed">Disputed</option>
-          <option value="resolved">Resolved</option>
-          <option value="ignored">Ignored</option>
-        </select>
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        >
-          <option value="all">All Priority</option>
-          <option value="critical">Critical</option>
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">New Alerts</p>
-              <p className="text-2xl font-bold text-red-600">
-                {alerts.filter((a) => a.status === "new").length}
-              </p>
-            </div>
-            <AlertTriangle className="h-8 w-8 text-red-600" />
-          </div>
-        </div>
-        <div className="bg-white p-4 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">High Priority</p>
-              <p className="text-2xl font-bold text-orange-600">
-                {
-                  alerts.filter(
-                    (a) => a.priority === "critical" || a.priority === "high"
-                  ).length
-                }
-              </p>
-            </div>
-            <Shield className="h-8 w-8 text-orange-600" />
-          </div>
-        </div>
-        <div className="bg-white p-4 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Resolved</p>
-              <p className="text-2xl font-bold text-green-600">
-                {alerts.filter((a) => a.status === "resolved").length}
-              </p>
-            </div>
-            <CheckCircle className="h-8 w-8 text-green-600" />
-          </div>
-        </div>
-        <div className="bg-white p-4 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Avg. Similarity</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {Math.round(
-                  alerts.reduce((sum, a) => sum + a.similarity, 0) /
-                    alerts.length
-                )}
-                %
-              </p>
-            </div>
-            <Eye className="h-8 w-8 text-gray-600" />
-          </div>
-        </div>
-      </div>
-
-      {/* Bulk Actions */}
-      {selectedAlerts.length > 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-blue-800">
-              {selectedAlerts.length} alert
-              {selectedAlerts.length !== 1 ? "s" : ""} selected
+    <div className="h-full p-8 bg-gradient-to-br from-white via-red-50/30 to-orange-50/30">
+      {/* Header Section */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-red-600 bg-clip-text text-transparent">
+              Security Alerts
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Monitor and respond to potential IP infringements
             </p>
-            <div className="flex space-x-2">
-              <button
-                onClick={() => handleBulkAction("ignore")}
-                className="text-sm text-gray-600 hover:text-gray-800"
-              >
-                Ignore All
-              </button>
-              <button
-                onClick={() => handleBulkAction("dispute")}
-                className="text-sm text-blue-600 hover:text-blue-800"
-              >
-                Raise Disputes
-              </button>
-              <button
-                onClick={() => setSelectedAlerts([])}
-                className="text-sm text-gray-600 hover:text-gray-800"
-              >
-                Clear Selection
-              </button>
+          </div>
+          <div className="flex gap-3">
+            <button className="group flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/50 text-gray-700 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+              <Filter className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+              Advanced Filter
+            </button>
+            <button className="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-xl hover:from-red-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-red-500/25 hover:transform hover:scale-105">
+              <Play className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+              Auto-Scan
+            </button>
+          </div>
+        </div>
+
+        {/* Alert Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-blue-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">
+                  Total Alerts
+                </p>
+                <p className="text-3xl font-bold text-gray-900 mt-1">47</p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
+                <AlertTriangle className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </div>
+
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-red-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Critical</p>
+                <p className="text-3xl font-bold text-red-600 mt-1">3</p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl">
+                <Zap className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </div>
+
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-yellow-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Pending</p>
+                <p className="text-3xl font-bold text-yellow-600 mt-1">12</p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl">
+                <Clock className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </div>
+
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-green-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Resolved</p>
+                <p className="text-3xl font-bold text-green-600 mt-1">28</p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl">
+                <CheckCircle className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </div>
+
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-purple-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">
+                  Success Rate
+                </p>
+                <p className="text-3xl font-bold text-purple-600 mt-1">94%</p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-purple-500 to-violet-500 rounded-xl">
+                <TrendingUp className="h-6 w-6 text-white" />
+              </div>
             </div>
           </div>
         </div>
-      )}
+
+        {/* Controls */}
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-gray-200/50">
+          <div className="flex flex-wrap gap-3">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Search alerts..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2.5 border border-gray-300/50 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 bg-white/70 backdrop-blur-sm min-w-[250px]"
+              />
+            </div>
+
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="px-4 py-2.5 border border-gray-300/50 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 bg-white/70 backdrop-blur-sm"
+            >
+              <option value="all">All Status</option>
+              <option value="new">New</option>
+              <option value="reviewed">Reviewed</option>
+              <option value="disputed">Disputed</option>
+              <option value="resolved">Resolved</option>
+              <option value="ignored">Ignored</option>
+            </select>
+          </div>
+
+          {selectedAlerts.length > 0 && (
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600">
+                {selectedAlerts.length} selected
+              </span>
+              <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">
+                Mark as Disputed
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Alerts List */}
-      <div className="bg-white rounded-lg border border-gray-200">
-        <div className="divide-y divide-gray-200">
-          {filteredAlerts.map((alert) => (
-            <div
-              key={alert.id}
-              className="p-6 hover:bg-gray-50 transition-colors"
-            >
-              <div className="flex items-start space-x-4">
-                <input
-                  type="checkbox"
-                  checked={selectedAlerts.includes(alert.id)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedAlerts([...selectedAlerts, alert.id]);
-                    } else {
-                      setSelectedAlerts(
-                        selectedAlerts.filter((id) => id !== alert.id)
-                      );
-                    }
-                  }}
-                  className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+      <div className="space-y-4">
+        {filteredAlerts.map((alert) => (
+          <div
+            key={alert.id}
+            className="group bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-red-300/50 overflow-hidden"
+          >
+            <div className="p-6">
+              <div className="flex items-start gap-4">
+                {/* Priority Indicator */}
+                <div
+                  className={`w-1 h-20 bg-gradient-to-b ${getPriorityColor(
+                    alert.priority
+                  )} rounded-full flex-shrink-0`}
                 />
 
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <Eye className="h-6 w-6 text-gray-400" />
-                  </div>
-                </div>
-
+                {/* Alert Content */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-lg font-medium text-gray-900">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedAlerts.includes(alert.id)}
+                        onChange={() => handleSelectAlert(alert.id)}
+                        className="rounded border-gray-300 text-red-600 focus:ring-red-500"
+                      />
+                      <h3 className="font-semibold text-gray-900 group-hover:text-red-600 transition-colors">
                         {alert.title}
                       </h3>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {alert.description}
+                      <span
+                        className={`px-3 py-1 text-xs font-medium rounded-full ${
+                          alert.priority === "critical"
+                            ? "bg-red-100 text-red-700"
+                            : alert.priority === "high"
+                            ? "bg-orange-100 text-orange-700"
+                            : alert.priority === "medium"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-blue-100 text-blue-700"
+                        }`}
+                      >
+                        {alert.priority.toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {getStatusIcon(alert.status)}
+                      <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <MoreVertical className="h-4 w-4 text-gray-500" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600 mb-4">{alert.description}</p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Original Asset */}
+                    <div className="bg-gray-50/50 rounded-xl p-4">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <Shield className="h-4 w-4" />
+                        Your Asset
+                      </h4>
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={alert.ipAsset.thumbnail}
+                          alt={alert.ipAsset.title}
+                          className="w-12 h-12 rounded-lg object-cover"
+                        />
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {alert.ipAsset.title}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Protected Asset
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Suspect Content */}
+                    <div className="bg-red-50/50 rounded-xl p-4">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-red-500" />
+                        Suspect Content
+                      </h4>
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={alert.suspectContent.thumbnail}
+                          alt="Suspect content"
+                          className="w-12 h-12 rounded-lg object-cover"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-gray-900">
+                            {alert.source.platform}
+                          </p>
+                          <p className="text-sm text-gray-600 truncate">
+                            {alert.source.url}
+                          </p>
+                        </div>
+                        <button className="p-2 bg-white rounded-lg hover:bg-gray-50 transition-colors">
+                          <ExternalLink className="h-4 w-4 text-gray-600" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Similarity & Confidence */}
+                  <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center p-3 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl">
+                      <p className="text-sm text-gray-600">Similarity</p>
+                      <p className="text-2xl font-bold text-blue-600">
+                        {alert.similarity}%
                       </p>
                     </div>
-                    <button className="text-gray-400 hover:text-gray-600">
-                      <MoreVertical className="h-5 w-5" />
+                    <div className="text-center p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+                      <p className="text-sm text-gray-600">Confidence</p>
+                      <p className="text-2xl font-bold text-green-600">
+                        {alert.confidence}%
+                      </p>
+                    </div>
+                    <div className="text-center p-3 bg-gradient-to-r from-purple-50 to-violet-50 rounded-xl">
+                      <p className="text-sm text-gray-600">Detection Time</p>
+                      <p className="text-sm font-medium text-purple-600">
+                        {alert.source.timestamp}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-xl hover:from-red-700 hover:to-pink-700 transition-all duration-300 shadow-lg">
+                      <AlertTriangle className="h-4 w-4" />
+                      File Dispute
                     </button>
-                  </div>
-
-                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <p className="text-gray-500">Similarity Score</p>
-                      <p
-                        className={`font-medium ${getSimilarityColor(
-                          alert.similarity
-                        )}`}
-                      >
-                        {alert.similarity}% match
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500">Source Platform</p>
-                      <p className="font-medium text-gray-900">
-                        {alert.source.platform}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500">Detected</p>
-                      <p className="font-medium text-gray-900">
-                        {new Date(alert.source.timestamp).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <span
-                        className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(
-                          alert.priority
-                        )}`}
-                      >
-                        {alert.priority.charAt(0).toUpperCase() +
-                          alert.priority.slice(1)}
-                      </span>
-                      <span
-                        className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(
-                          alert.status
-                        )}`}
-                      >
-                        {alert.status.charAt(0).toUpperCase() +
-                          alert.status.slice(1)}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                        View Details
-                      </button>
-                      <button className="text-gray-600 hover:text-gray-800">
-                        <ExternalLink className="h-4 w-4" />
-                      </button>
-                      <button className="text-red-600 hover:text-red-800 text-sm font-medium">
-                        Raise Dispute
-                      </button>
-                      <button className="text-gray-600 hover:text-gray-800 text-sm">
-                        Ignore
-                      </button>
-                    </div>
+                    <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                      <Eye className="h-4 w-4" />
+                      Review
+                    </button>
+                    <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                      <X className="h-4 w-4" />
+                      Ignore
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
 
-        {filteredAlerts.length === 0 && (
-          <div className="text-center py-12">
-            <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+      {/* Empty State */}
+      {filteredAlerts.length === 0 && (
+        <div className="text-center py-16">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-12 max-w-md mx-auto shadow-lg border border-gray-200/50">
+            <AlertTriangle className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               No alerts found
             </h3>
-            <p className="text-gray-600 mb-4">
-              {searchTerm || filter !== "all"
-                ? "Try adjusting your search or filters"
-                : "Great! No infringement alerts at the moment"}
+            <p className="text-gray-600 mb-6">
+              {searchTerm
+                ? "Try adjusting your search terms"
+                : "All clear! No security alerts at this time."}
             </p>
+            <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-xl hover:from-red-700 hover:to-pink-700 transition-all duration-300 shadow-lg mx-auto">
+              <Play className="h-4 w-4" />
+              Run Manual Scan
+            </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

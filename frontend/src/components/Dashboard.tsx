@@ -3,121 +3,137 @@ import {
   Shield,
   Plus,
   Search,
-  AlertTriangle,
   BarChart3,
   Settings,
-  Bell,
+  Zap,
+  Upload,
+  Eye,
 } from "lucide-react";
 import IPPortfolio from "./IPPortfolio";
-import AlertsLog from "./AlertsLog";
 import DisputesEnforcement from "./DisputesEnforcement";
 import Analytics from "./Analytics";
-import { WalletButton } from "./WalletButton";
+import CreateIP from "./CreateIP";
+import InfringementChecker from "./InfringementChecker";
+import Navbar from "./Navbar";
+import { WalletStatus } from "./WalletStatus";
+import { Web3Demo } from "./Web3Demo";
 
 const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState("portfolio");
 
   const tabs = [
     { id: "portfolio", name: "IP Portfolio", icon: Shield },
-    { id: "alerts", name: "Alerts", icon: AlertTriangle, badge: 3 },
+    { id: "create", name: "Create IP", icon: Upload },
+    { id: "infringement", name: "Check Infringement", icon: Eye },
     { id: "disputes", name: "Disputes", icon: Search },
     { id: "analytics", name: "Analytics", icon: BarChart3 },
+    { id: "web3", name: "Web3", icon: Zap },
   ];
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "portfolio":
         return <IPPortfolio />;
-      case "alerts":
-        return <AlertsLog />;
+      case "create":
+        return <CreateIP />;
+      case "infringement":
+        return <InfringementChecker />;
       case "disputes":
         return <DisputesEnforcement />;
       case "analytics":
         return <Analytics />;
+      case "web3":
+        return <Web3Demo />;
       default:
         return <IPPortfolio />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <Shield className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">
-                StorySentinel
-              </span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      {/* Navbar */}
+      <Navbar />
+
+      {/* Main Dashboard Content */}
+      <div className="pt-16">
+        <div className="max-w-full">
+          <div className="flex h-[calc(100vh-4rem)]">
+            {/* Sidebar Navigation */}
+            <div className="w-72 flex-shrink-0 bg-white/80 backdrop-blur-lg border-r border-gray-200/50 shadow-xl">
+              <div className="p-6">
+                {/* Logo Section */}
+                <div className="mb-8">
+                  <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl text-white">
+                    <Shield className="h-6 w-6" />
+                    <span className="font-bold text-lg">StorySentinel</span>
+                  </div>
+                </div>
+
+                {/* Navigation */}
+                <nav className="space-y-2">
+                  {tabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`group w-full flex items-center px-4 py-3.5 text-sm font-medium rounded-xl transition-all duration-300 ${
+                          activeTab === tab.id
+                            ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25 transform scale-[1.02]"
+                            : "text-gray-600 hover:text-gray-900 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 hover:shadow-md hover:transform hover:scale-[1.01]"
+                        }`}
+                      >
+                        <Icon
+                          className={`h-5 w-5 mr-3 transition-transform duration-300 ${
+                            activeTab === tab.id
+                              ? "scale-110"
+                              : "group-hover:scale-105"
+                          }`}
+                        />
+                        {tab.name}
+                      </button>
+                    );
+                  })}
+                </nav>
+
+                {/* Quick Actions */}
+                <div className="mt-8">
+                  <h3 className="text-sm font-semibold text-gray-900 mb-4 tracking-wide uppercase">
+                    Quick Actions
+                  </h3>
+                  <div className="space-y-3">
+                    <button className="group w-full flex items-center px-4 py-3.5 text-sm text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:transform hover:scale-105 hover:shadow-blue-500/25">
+                      <Plus className="h-4 w-4 mr-3 transition-transform duration-300 group-hover:rotate-90" />
+                      Register New IP
+                    </button>
+                    <button className="group w-full flex items-center px-4 py-3.5 text-sm text-gray-700 bg-white/70 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-gray-200/50 hover:border-gray-300">
+                      <Search className="h-4 w-4 mr-3 transition-transform duration-300 group-hover:scale-110" />
+                      Manual Scan
+                    </button>
+                    <button className="group w-full flex items-center px-4 py-3.5 text-sm text-gray-700 bg-white/70 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-gray-200/50 hover:border-gray-300">
+                      <Settings className="h-4 w-4 mr-3 transition-transform duration-300 group-hover:rotate-45" />
+                      Settings
+                    </button>
+                  </div>
+                </div>
+
+                {/* Wallet Status */}
+                <div className="mt-8">
+                  <h3 className="text-sm font-semibold text-gray-900 mb-4 tracking-wide uppercase">
+                    Wallet Status
+                  </h3>
+                  <WalletStatus />
+                </div>
+              </div>
             </div>
 
-            <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-400 hover:text-gray-500 relative">
-                <Bell className="h-6 w-6" />
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                  3
-                </span>
-              </button>
-              <WalletButton />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Navigation */}
-          <div className="lg:w-64 flex-shrink-0">
-            <nav className="space-y-1">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                      activeTab === tab.id
-                        ? "bg-blue-50 text-blue-700 border-blue-200"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                    }`}
-                  >
-                    <Icon className="h-5 w-5 mr-3" />
-                    {tab.name}
-                    {tab.badge && (
-                      <span className="ml-auto bg-red-100 text-red-600 text-xs font-medium px-2 py-1 rounded-full">
-                        {tab.badge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </nav>
-
-            {/* Quick Actions */}
-            <div className="mt-8">
-              <h3 className="text-sm font-medium text-gray-900 mb-3">
-                Quick Actions
-              </h3>
-              <div className="space-y-2">
-                <button className="w-full flex items-center px-3 py-2 text-sm text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Register New IP
-                </button>
-                <button className="w-full flex items-center px-3 py-2 text-sm text-gray-600 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <Search className="h-4 w-4 mr-2" />
-                  Manual Scan
-                </button>
-                <button className="w-full flex items-center px-3 py-2 text-sm text-gray-600 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <Settings className="h-4 w-4 mr-2" />
-                  Settings
-                </button>
+            {/* Main Content */}
+            <div className="flex-1 overflow-auto">
+              <div className="h-full bg-white/50 backdrop-blur-sm">
+                {renderTabContent()}
               </div>
             </div>
           </div>
-
-          {/* Main Content */}
-          <div className="flex-1">{renderTabContent()}</div>
         </div>
       </div>
     </div>

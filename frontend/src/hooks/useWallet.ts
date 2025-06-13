@@ -1,109 +1,40 @@
-import { useUser as useCivicUser } from "@civic/auth-web3/react";
-import { useAutoConnect } from "@civic/auth-web3/wagmi";
-import { userHasWallet } from "@civic/auth-web3";
-import { useAccount, useBalance, useConnect, useDisconnect } from "wagmi";
-import { useMemo } from "react";
+import {
+  useActiveAccount,
+  useActiveWallet,
+  useDisconnect,
+} from "thirdweb/react";
+import { useWalletBalance } from "thirdweb/react";
+import { thirdwebClient, DEFAULT_CHAIN } from "../config/web3";
 
-export interface UseWalletReturn {
-  // Auth state
-  user: any;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  authStatus: string;
-
-  // Wallet state
-  hasWallet: boolean;
-  walletAddress?: string;
-  isWalletConnected: boolean;
-  isCreatingWallet: boolean;
-  balance?: { value: bigint; symbol: string; formatted: string };
-
-  // Actions
-  signIn: () => Promise<void>;
-  signOut: () => Promise<void>;
-  createWallet: () => Promise<void>;
-  connectWallet: () => void;
-  disconnectWallet: () => void;
-}
-
-export const useWallet = (): UseWalletReturn => {
-  const userContext = useCivicUser();
-  const { address, isConnected } = useAccount();
-  const { data: balance } = useBalance({ address });
-  const { connect, connectors } = useConnect();
+export const useWallet = () => {
+  const account = useActiveAccount();
+  const wallet = useActiveWallet();
   const { disconnect } = useDisconnect();
 
-  // Auto-connect when user has wallet
-  useAutoConnect();
+  const isConnected = !!account && !!wallet;
 
-  const hasWallet = useMemo(() => {
-    return userContext.user ? userHasWallet(userContext) : false;
-  }, [userContext]);
-
-  const walletAddress = useMemo(() => {
-    if (hasWallet && "ethereum" in userContext) {
-      return userContext.ethereum.address;
-    }
-    return address;
-  }, [hasWallet, userContext, address]);
-
-  const formattedBalance = useMemo(() => {
-    if (!balance) return undefined;
-
-    return {
-      value: balance.value,
-      symbol: balance.symbol,
-      formatted: `${(Number(balance.value) / 1e18).toFixed(4)} ${
-        balance.symbol
-      }`,
-    };
-  }, [balance]);
-
-  const createWallet = async () => {
-    if (userContext.user && !hasWallet && "createWallet" in userContext) {
-      try {
-        await userContext.createWallet();
-      } catch (error) {
-        console.error("Failed to create wallet:", error);
-        throw error;
-      }
-    }
-  };
-
-  const connectWallet = () => {
-    const civicConnector = connectors.find((c) => c.id === "civic");
-    if (civicConnector) {
-      connect({ connector: civicConnector });
-    }
-  };
-
-  const disconnectWallet = () => {
-    disconnect();
-  };
+  // Get wallet balance
+  const { data: balance, isLoading: balanceLoading } = useWalletBalance({
+    client: thirdwebClient,
+    chain: DEFAULT_CHAIN,
+    address: account?.address,
+  });
 
   return {
-    // Auth state
-    user: userContext.user,
-    isAuthenticated: !!userContext.user,
-    isLoading: userContext.isLoading,
-    authStatus: userContext.authStatus,
+    // Account info
+    account,
+    wallet,
+    address: account?.address,
+    isConnected,
 
-    // Wallet state
-    hasWallet,
-    walletAddress,
-    isWalletConnected: isConnected,
-    isCreatingWallet: hasWallet
-      ? false
-      : "walletCreationInProgress" in userContext
-      ? userContext.walletCreationInProgress
-      : false,
-    balance: formattedBalance,
+    // Balance info
+    balance,
+    balanceLoading,
 
     // Actions
-    signIn: userContext.signIn,
-    signOut: userContext.signOut,
-    createWallet,
-    connectWallet,
-    disconnectWallet,
+    disconnect,
+
+    // Chain info
+    chain: DEFAULT_CHAIN,
   };
 };

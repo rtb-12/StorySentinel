@@ -3,13 +3,14 @@ import {
   BarChart3,
   TrendingUp,
   Shield,
-  Eye,
   AlertTriangle,
-  Globe,
   Calendar,
   Download,
   Filter,
   RefreshCw,
+  PieChart,
+  Activity,
+  Target,
 } from "lucide-react";
 
 const Analytics: React.FC = () => {
@@ -68,266 +69,326 @@ const Analytics: React.FC = () => {
     },
   };
 
-  const handleRefresh = async () => {
+  const handleRefresh = () => {
     setRefreshing(true);
     // Simulate API call
     setTimeout(() => setRefreshing(false), 2000);
   };
 
-  const handleExport = () => {
-    console.log("Exporting analytics data...");
-    // Here you would implement data export functionality
-  };
-
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            Analytics Dashboard
-          </h1>
-          <p className="text-gray-600">
-            Monitor your IP protection performance
-          </p>
+    <div className="h-full p-8 bg-gradient-to-br from-white via-green-50/30 to-emerald-50/30">
+      {/* Header Section */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-green-600 bg-clip-text text-transparent">
+              Analytics Dashboard
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Comprehensive insights into your IP protection performance
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <button
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="group flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/50 text-gray-700 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300"
+            >
+              <RefreshCw
+                className={`h-5 w-5 transition-transform duration-300 ${
+                  refreshing ? "animate-spin" : "group-hover:rotate-180"
+                }`}
+              />
+              Refresh
+            </button>
+            <button className="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/25 hover:transform hover:scale-105">
+              <Download className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+              Export Report
+            </button>
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <select
-            value={timeRange}
-            onChange={(e) => setTimeRange(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="7d">Last 7 days</option>
-            <option value="30d">Last 30 days</option>
-            <option value="90d">Last 3 months</option>
-            <option value="1y">Last year</option>
-          </select>
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing}
-            className="p-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <RefreshCw
-              className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
-            />
-          </button>
-          <button
-            onClick={handleExport}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-          >
-            <Download className="h-4 w-4 mr-2" />
-            Export
+
+        {/* Key Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-blue-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">
+                  Total Assets
+                </p>
+                <p className="text-3xl font-bold text-gray-900 mt-1">
+                  {analytics.overview.totalAssets}
+                </p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
+                <Shield className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="mt-2 flex items-center text-xs">
+              <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+              <span className="text-green-600 font-medium">+12%</span>
+              <span className="text-gray-500 ml-1">vs last month</span>
+            </div>
+          </div>
+
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-purple-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Total Scans</p>
+                <p className="text-3xl font-bold text-purple-600 mt-1">
+                  {analytics.overview.totalScans.toLocaleString()}
+                </p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-purple-500 to-violet-500 rounded-xl">
+                <Activity className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="mt-2 flex items-center text-xs">
+              <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+              <span className="text-green-600 font-medium">+24%</span>
+              <span className="text-gray-500 ml-1">vs last month</span>
+            </div>
+          </div>
+
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-red-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">
+                  Alerts Generated
+                </p>
+                <p className="text-3xl font-bold text-red-600 mt-1">
+                  {analytics.overview.alertsGenerated}
+                </p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl">
+                <AlertTriangle className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="mt-2 flex items-center text-xs">
+              <TrendingUp className="h-3 w-3 text-red-500 mr-1" />
+              <span className="text-red-600 font-medium">+8%</span>
+              <span className="text-gray-500 ml-1">vs last month</span>
+            </div>
+          </div>
+
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-green-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">
+                  Disputes Won
+                </p>
+                <p className="text-3xl font-bold text-green-600 mt-1">
+                  {analytics.overview.disputesWon}
+                </p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl">
+                <Target className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="mt-2 flex items-center text-xs">
+              <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+              <span className="text-green-600 font-medium">+16%</span>
+              <span className="text-gray-500 ml-1">vs last month</span>
+            </div>
+          </div>
+
+          <div className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 hover:border-indigo-300/50 hover:transform hover:scale-105">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">
+                  Protection Score
+                </p>
+                <p className="text-3xl font-bold text-indigo-600 mt-1">
+                  {analytics.overview.protectionScore}%
+                </p>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl">
+                <BarChart3 className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="mt-2">
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-1000"
+                  style={{ width: `${analytics.overview.protectionScore}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Time Range Selector */}
+        <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-gray-200/50 mb-8">
+          <div className="flex items-center gap-4">
+            <Calendar className="h-5 w-5 text-gray-500" />
+            <span className="font-medium text-gray-900">Time Range:</span>
+            <div className="flex bg-gray-100 rounded-xl p-1">
+              {["7d", "30d", "90d", "1y"].map((range) => (
+                <button
+                  key={range}
+                  onClick={() => setTimeRange(range)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    timeRange === range
+                      ? "bg-white shadow-sm text-blue-600"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  {range === "7d"
+                    ? "7 Days"
+                    : range === "30d"
+                    ? "30 Days"
+                    : range === "90d"
+                    ? "90 Days"
+                    : "1 Year"}
+                </button>
+              ))}
+            </div>
+          </div>
+          <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">
+            <Filter className="h-4 w-4" />
+            Custom Range
           </button>
         </div>
       </div>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">IP Protection Score</p>
-              <p className="text-3xl font-bold text-green-600">
-                {analytics.overview.protectionScore}%
-              </p>
-              <p className="text-xs text-green-600 flex items-center mt-1">
-                <TrendingUp className="h-3 w-3 mr-1" />
-                +2% vs last month
-              </p>
-            </div>
-            <Shield className="h-8 w-8 text-green-600" />
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Total Assets</p>
-              <p className="text-3xl font-bold text-blue-600">
-                {analytics.overview.totalAssets}
-              </p>
-              <p className="text-xs text-blue-600 flex items-center mt-1">
-                <TrendingUp className="h-3 w-3 mr-1" />
-                +3 this month
-              </p>
-            </div>
-            <BarChart3 className="h-8 w-8 text-blue-600" />
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Total Scans</p>
-              <p className="text-3xl font-bold text-purple-600">
-                {analytics.overview.totalScans.toLocaleString()}
-              </p>
-              <p className="text-xs text-purple-600 flex items-center mt-1">
-                <TrendingUp className="h-3 w-3 mr-1" />
-                +12% vs last week
-              </p>
-            </div>
-            <Eye className="h-8 w-8 text-purple-600" />
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Alerts Generated</p>
-              <p className="text-3xl font-bold text-orange-600">
-                {analytics.overview.alertsGenerated}
-              </p>
-              <p className="text-xs text-orange-600 flex items-center mt-1">
-                <TrendingUp className="h-3 w-3 mr-1" />
-                -5% vs last month
-              </p>
-            </div>
-            <AlertTriangle className="h-8 w-8 text-orange-600" />
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Disputes Won</p>
-              <p className="text-3xl font-bold text-green-600">
-                {analytics.overview.disputesWon}
-              </p>
-              <p className="text-xs text-green-600 flex items-center mt-1">
-                <TrendingUp className="h-3 w-3 mr-1" />
-                89% success rate
-              </p>
-            </div>
-            <Shield className="h-8 w-8 text-green-600" />
-          </div>
-        </div>
-      </div>
-
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Scanning Activity */}
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">
-              Scanning Activity
+      {/* Charts and Analytics */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {/* Scans Over Time Chart */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Scan Activity
             </h3>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
-                Scans
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span className="text-sm text-gray-600">Scans</span>
               </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-                Alerts
+              <div className="flex items-center gap-2 ml-4">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <span className="text-sm text-gray-600">Alerts</span>
               </div>
             </div>
           </div>
-
-          {/* Simple bar chart representation */}
-          <div className="space-y-3">
+          <div className="h-64 flex items-end justify-between gap-2">
             {analytics.trends.scansOverTime.map((day, index) => (
-              <div key={day.date} className="flex items-center space-x-3">
-                <div className="w-16 text-xs text-gray-600">
+              <div
+                key={index}
+                className="flex-1 flex flex-col items-center gap-1"
+              >
+                <div className="w-full flex flex-col gap-1">
+                  <div
+                    className="bg-gradient-to-t from-blue-500 to-blue-400 rounded-t transition-all duration-500 hover:from-blue-600 hover:to-blue-500"
+                    style={{
+                      height: `${(day.scans / 70) * 100}%`,
+                      minHeight: "4px",
+                    }}
+                  />
+                  <div
+                    className="bg-gradient-to-t from-red-500 to-red-400 rounded-t transition-all duration-500 hover:from-red-600 hover:to-red-500"
+                    style={{
+                      height: `${(day.alerts / 5) * 20}%`,
+                      minHeight: day.alerts > 0 ? "4px" : "0px",
+                    }}
+                  />
+                </div>
+                <span className="text-xs text-gray-500 transform rotate-45 origin-left mt-2">
                   {new Date(day.date).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                   })}
-                </div>
-                <div className="flex-1 flex items-center space-x-2">
-                  <div className="flex-1 bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-500 h-2 rounded-full"
-                      style={{ width: `${(day.scans / 70) * 100}%` }}
-                    ></div>
-                  </div>
-                  <div className="w-8 text-xs text-gray-600">{day.scans}</div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-gray-200 rounded-full flex items-center justify-center">
-                    {day.alerts > 0 && (
-                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    )}
-                  </div>
-                  <div className="w-4 text-xs text-gray-600">{day.alerts}</div>
-                </div>
+                </span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Platform Breakdown */}
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">
-            Infringement by Platform
-          </h3>
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Platform Distribution
+            </h3>
+            <PieChart className="h-5 w-5 text-gray-500" />
+          </div>
           <div className="space-y-4">
             {analytics.trends.platformBreakdown.map((platform, index) => (
-              <div
-                key={platform.platform}
-                className="flex items-center justify-between"
-              >
-                <div className="flex items-center space-x-3">
-                  <Globe className="h-4 w-4 text-gray-400" />
-                  <span className="text-sm font-medium text-gray-900">
+              <div key={index} className="group">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-medium text-gray-900">
                     {platform.platform}
                   </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-24 bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-500 h-2 rounded-full"
-                      style={{ width: `${platform.percentage}%` }}
-                    ></div>
-                  </div>
-                  <span className="text-sm text-gray-600 w-8">
-                    {platform.count}
+                  <span className="text-sm text-gray-600">
+                    {platform.percentage}%
                   </span>
                 </div>
+                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-1000 ${
+                      index === 0
+                        ? "bg-gradient-to-r from-blue-500 to-cyan-500"
+                        : index === 1
+                        ? "bg-gradient-to-r from-green-500 to-emerald-500"
+                        : index === 2
+                        ? "bg-gradient-to-r from-purple-500 to-violet-500"
+                        : "bg-gradient-to-r from-orange-500 to-red-500"
+                    } group-hover:shadow-lg`}
+                    style={{ width: `${platform.percentage}%` }}
+                  />
+                </div>
+                <p className="text-sm text-gray-600 mt-1">
+                  {platform.count} infringement{platform.count !== 1 ? "s" : ""}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Tables Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Most Targeted Assets */}
-        <div className="bg-white rounded-lg border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">
-              Most Targeted Assets
-            </h3>
-            <p className="text-sm text-gray-600">
-              Assets with the highest infringement rates
-            </p>
-          </div>
-          <div className="divide-y divide-gray-200">
+      {/* Top Infringed Assets and Top Infringers */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Top Infringed Assets */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">
+            Most Targeted Assets
+          </h3>
+          <div className="space-y-4">
             {analytics.trends.topInfringedAssets.map((asset, index) => (
               <div
-                key={asset.name}
-                className="p-4 flex items-center justify-between"
+                key={index}
+                className="group flex items-center justify-between p-4 bg-gray-50/50 rounded-xl hover:bg-white hover:shadow-md transition-all duration-300"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <span className="text-sm font-medium text-blue-600">
-                      {index + 1}
-                    </span>
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold ${
+                      index === 0
+                        ? "bg-gradient-to-r from-yellow-500 to-orange-500"
+                        : index === 1
+                        ? "bg-gradient-to-r from-gray-400 to-gray-500"
+                        : index === 2
+                        ? "bg-gradient-to-r from-orange-600 to-red-600"
+                        : "bg-gradient-to-r from-blue-500 to-purple-500"
+                    }`}
+                  >
+                    {index + 1}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      {asset.name}
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      {asset.resolved} of {asset.infringements} resolved
+                    <p className="font-medium text-gray-900">{asset.name}</p>
+                    <p className="text-sm text-gray-600">
+                      {asset.infringements} infringement
+                      {asset.infringements !== 1 ? "s" : ""} • {asset.resolved}{" "}
+                      resolved
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm font-medium text-red-600">
+                <div className="text-right">
+                  <p className="text-lg font-bold text-red-600">
                     {asset.infringements}
-                  </span>
-                  <AlertTriangle className="h-4 w-4 text-red-600" />
+                  </p>
+                  <p className="text-xs text-green-600">
+                    {Math.round((asset.resolved / asset.infringements) * 100)}%
+                    resolved
+                  </p>
                 </div>
               </div>
             ))}
@@ -335,72 +396,37 @@ const Analytics: React.FC = () => {
         </div>
 
         {/* Top Infringers */}
-        <div className="bg-white rounded-lg border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">
-              Repeat Infringers
-            </h3>
-            <p className="text-sm text-gray-600">
-              Accounts with multiple violations
-            </p>
-          </div>
-          <div className="divide-y divide-gray-200">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">
+            Frequent Infringers
+          </h3>
+          <div className="space-y-4">
             {analytics.trends.topInfringers.map((infringer, index) => (
               <div
-                key={infringer.identifier}
-                className="p-4 flex items-center justify-between"
+                key={index}
+                className="group flex items-center justify-between p-4 bg-gray-50/50 rounded-xl hover:bg-white hover:shadow-md transition-all duration-300"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                    <span className="text-sm font-medium text-red-600">
-                      {index + 1}
-                    </span>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">
+                    {infringer.identifier.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900 font-mono">
+                    <p className="font-medium text-gray-900">
                       {infringer.identifier}
                     </p>
-                    <p className="text-xs text-gray-600">
+                    <p className="text-sm text-gray-600">
                       {infringer.platform}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm font-medium text-red-600">
+                <div className="text-right">
+                  <p className="text-lg font-bold text-red-600">
                     {infringer.violations}
-                  </span>
-                  <span className="text-xs text-gray-500">violations</span>
+                  </p>
+                  <p className="text-xs text-gray-600">violations</p>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Success Metrics */}
-      <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200 p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              Protection Effectiveness
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-              <div>
-                <p className="text-gray-600">Detection Accuracy</p>
-                <p className="text-2xl font-bold text-green-600">96.7%</p>
-              </div>
-              <div>
-                <p className="text-gray-600">Average Response Time</p>
-                <p className="text-2xl font-bold text-blue-600">4.2hrs</p>
-              </div>
-              <div>
-                <p className="text-gray-600">Resolution Success Rate</p>
-                <p className="text-2xl font-bold text-green-600">89.3%</p>
-              </div>
-            </div>
-          </div>
-          <div className="hidden sm:block">
-            <Shield className="h-16 w-16 text-green-600" />
           </div>
         </div>
       </div>

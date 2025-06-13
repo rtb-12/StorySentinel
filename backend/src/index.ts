@@ -1,108 +1,39 @@
+import "dotenv/config"; // Load this first before anything else
 import express from "express";
 import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-
-import { errorHandler, notFound } from "./middleware/errorMiddleware";
-import { logger } from "./utils/logger";
-
-// Import routes
-import ipAssetRoutes from "./routes/ipAssetRoutes";
-import alertRoutes from "./routes/alertRoutes";
-import disputeRoutes from "./routes/disputeRoutes";
-import analyticsRoutes from "./routes/analyticsRoutes";
-import yakoaRoutes from "./routes/yakoaRoutes";
-import storyRoutes from "./routes/storyRoutes";
-
-// Load environment variables
-dotenv.config();
+import yakoaRoutes from "./routes/yakoa";
+import storyRoutes from "./routes/story";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(helmet());
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
-    credentials: true,
-  })
-);
-app.use(morgan("combined"));
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+// Debug: Log env vars to make sure they're loaded
+console.log("Environment variables loaded:");
+console.log("YAKOA_BASE_URL:", process.env.YAKOA_BASE_URL ? "SET" : "NOT SET");
+console.log("YAKOA_API_KEY:", process.env.YAKOA_API_KEY ? "SET" : "NOT SET");
+console.log("STORY_API_KEY:", process.env.STORY_API_KEY ? "SET" : "NOT SET");
+
+app.use(cors());
+app.use(express.json());
 
 // Health check endpoint
 app.get("/health", (req, res) => {
-  res.status(200).json({
-    status: "OK",
-    message: "StorySentinel API is running",
+  res.json({
+    status: "ok",
     timestamp: new Date().toISOString(),
-    version: "1.0.0",
+    env: {
+      yakoa_configured: !!(
+        process.env.YAKOA_BASE_URL && process.env.YAKOA_API_KEY
+      ),
+      story_configured: !!process.env.STORY_API_KEY,
+    },
   });
 });
 
-// API Routes
-app.use("/api/ip-assets", ipAssetRoutes);
-app.use("/api/alerts", alertRoutes);
-app.use("/api/disputes", disputeRoutes);
-app.use("/api/analytics", analyticsRoutes);
 app.use("/api/yakoa", yakoaRoutes);
 app.use("/api/story", storyRoutes);
 
-// Error handling middleware
-app.use(notFound);
-app.use(errorHandler);
-
-// Database connection
-const connectDB = async () => {
-  try {
-    if (process.env.MONGODB_URI) {
-      await mongoose.connect(process.env.MONGODB_URI);
-      logger.info("Connected to MongoDB");
-    } else {
-      logger.warn("MongoDB URI not provided, running without database");
-    }
-  } catch (error) {
-    logger.error("Database connection error:", error);
-    process.exit(1);
-  }
-};
-
-// Start server
-const startServer = async () => {
-  try {
-    await connectDB();
-
-    app.listen(PORT, () => {
-      logger.info(`StorySentinel API server running on port ${PORT}`);
-      logger.info(`Environment: ${process.env.NODE_ENV || "development"}`);
-    });
-  } catch (error) {
-    logger.error("Failed to start server:", error);
-    process.exit(1);
-  }
-};
-
-// Graceful shutdown
-process.on("SIGTERM", () => {
-  logger.info("SIGTERM received, shutting down gracefully");
-  process.exit(0);
+app.listen(PORT, () => {
+  console.log(`Backend server running on port ${PORT}`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
 });
-
-process.on("SIGINT", () => {
-  logger.info("SIGINT received, shutting down gracefully");
-  process.exit(0);
-});
-
-// Handle unhandled promise rejections
-process.on("unhandledRejection", (err: Error) => {
-  logger.error("Unhandled Promise Rejection:", err);
-  process.exit(1);
-});
-
-startServer();
-
-export default app;
