@@ -1,128 +1,571 @@
-# StorySentinel
+<div align="center">
 
-**Comprehensive IP Protection Platform** integrating Story Protocol blockchain technology with Yakoa AI-powered infringement detection.
+# 🛡️ StorySentinel
+
+<img src="assets/Story.png" alt="StorySentinel Logo" width="300"/>
+
+**Next-Generation IP Protection Platform**
+
+_Blockchain-Powered IP Registration • AI-Driven Infringement Detection • Automated Dispute Resolution_
+
+[![Story Protocol](https://img.shields.io/badge/Story_Protocol-Integration-blue?style=for-the-badge&logo=ethereum)](https://storyprotocol.xyz)
+[![Yakoa AI](https://img.shields.io/badge/Yakoa_AI-Powered-green?style=for-the-badge&logo=artificial-intelligence)](https://yakoa.io)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+[![Build Status](https://img.shields.io/badge/Build-Passing-success?style=for-the-badge)](https://github.com)
+
+</div>
+
+---
 
 ## 🌟 Overview
 
-StorySentinel is a next-generation intellectual property protection platform that combines the power of blockchain-based IP registration through Story Protocol with advanced AI-driven infringement detection via Yakoa. Our platform provides creators, businesses, and IP holders with comprehensive tools to register, monitor, and enforce their intellectual property rights.
+StorySentinel revolutionizes intellectual property protection by seamlessly integrating blockchain technology with artificial intelligence. Our platform empowers creators, businesses, and IP holders with a comprehensive suite of tools for registering, monitoring, and enforcing intellectual property rights in the digital age.
 
-## ✨ Key Features
+**🔥 Why StorySentinel?**
 
-### 🔐 IP Asset Management
+- **Blockchain-First**: Immutable IP registration on Story Protocol
+- **AI-Powered**: Advanced infringement detection via Yakoa
+- **Real-Time**: Continuous monitoring across platforms
+- **Automated**: Streamlined dispute resolution workflow
 
-- **Multi-format Support**: Register trademarks, copyrights, patents, and trade secrets
-- **Blockchain Registration**: Secure IP registration on Story Protocol
-- **NFT Representation**: Each IP asset is minted as an NFT for proof of ownership
-- **Metadata Storage**: IPFS-based decentralized metadata storage
+## ✨ Core Features
 
-### 🤖 AI-Powered Monitoring
+<div align="center">
 
-- **Real-time Detection**: Continuous monitoring across multiple platforms
-- **Smart Alerts**: Intelligent notification system for potential infringements
-- **Similarity Analysis**: Advanced AI algorithms for content comparison
-- **Platform Coverage**: Monitor social media, marketplaces, and content platforms
+### 🎯 **Complete IP Protection Ecosystem**
 
-### ⚖️ Dispute Management
+</div>
 
-- **Automated Evidence Collection**: Gather and organize infringement evidence
-- **Story Protocol Integration**: Submit disputes directly to blockchain arbitration
-- **Legal Workflow**: Streamlined dispute resolution process
-- **Settlement Tracking**: Monitor case progress and outcomes
+<table>
+<tr>
+<td width="50%">
 
-### 📊 Analytics & Insights
+### 🔐 **Blockchain IP Registry**
 
-- **Portfolio Analytics**: Comprehensive IP portfolio management
-- **Infringement Statistics**: Track detection rates and resolution success
-- **Financial Metrics**: ROI analysis and cost-benefit tracking
-- **Trend Analysis**: Market intelligence and competitive insights
+- **📝 Multi-Format Support**  
+  Register trademarks, copyrights, patents & trade secrets
+- **⛓️ Story Protocol Integration**  
+  Immutable blockchain registration with proof of creation
+- **🏷️ NFT Representation**  
+  Each IP asset minted as a unique, tradeable NFT
+- **🌐 IPFS Metadata**  
+  Decentralized storage for tamper-proof evidence
 
-## 🏗️ Architecture
+</td>
+<td width="50%">
 
-### Frontend (React + TypeScript)
+### 🤖 **AI-Powered Monitoring**
 
-- **Modern UI**: Clean, responsive interface built with React and Tailwind CSS
-- **Wallet Integration**: Connect with MetaMask and other Web3 wallets
-- **Real-time Updates**: Live data updates using React Query
-- **Component Library**: Reusable UI components with Lucide icons
+- **👁️ Real-Time Detection**  
+  24/7 monitoring across 100+ platforms
+- **🧠 Smart Similarity Analysis**  
+  Advanced ML algorithms for content comparison
+- **⚡ Instant Alerts**  
+  Immediate notifications for potential infringements
+- **📊 Confidence Scoring**  
+  AI-driven similarity ratings and match quality
 
-### Backend (Node.js + Express)
+</td>
+</tr>
+<tr>
+<td>
 
-- **RESTful API**: Comprehensive API endpoints for all functionality
-- **Service Architecture**: Modular service layer for external integrations
-- **Authentication**: JWT-based secure authentication system
-- **File Handling**: Support for media uploads and IPFS storage
+### ⚖️ **Automated Dispute Resolution**
 
-### Smart Contracts (Solidity)
+- **📋 Evidence Collection**  
+  Automated gathering and organization of proof
+- **🔗 Blockchain Submission**  
+  Direct integration with Story Protocol arbitration
+- **📈 Case Tracking**  
+  Real-time updates on dispute progress
+- **💰 Settlement Management**  
+  Automated execution of resolution terms
 
-- **IP Asset NFTs**: ERC-721 based IP asset representation
-- **Story Protocol Integration**: Native integration with Story Protocol
-- **Access Control**: Role-based permissions and authorization
-- **Upgradeable**: Proxy pattern for contract upgrades
+</td>
+<td>
 
-### External Integrations
+### 📊 **Analytics & Intelligence**
 
-- **Story Protocol**: Blockchain IP registration and dispute resolution
-- **Yakoa API**: AI-powered content detection and monitoring
-- **IPFS**: Decentralized storage for metadata and evidence
-- **MongoDB**: Primary database for application data
+- **📈 Portfolio Dashboard**  
+  Comprehensive IP asset management
+- **🔍 Market Intelligence**  
+  Competitive analysis and trend identification
+- **💹 Financial Metrics**  
+  ROI tracking and cost-benefit analysis
+- **📋 Compliance Reports**  
+  Automated legal documentation
 
-## 🚀 Quick Start
+</td>
+</tr>
+</table>
 
-### Prerequisites
+---
 
-- Node.js 18+ and npm
-- MongoDB (local or cloud)
-- Git
+### 🚀 **Key Differentiators**
 
-### Installation
+<div align="center">
 
-1. **Clone the repository**
+| 🏆 **Feature**          | 🏢 **Traditional IP**   | 🛡️ **StorySentinel**         |
+| ----------------------- | ----------------------- | ---------------------------- |
+| **Registration Speed**  | Days to Weeks           | Minutes                      |
+| **Proof of Ownership**  | Paper Documents         | Blockchain Immutable         |
+| **Monitoring Coverage** | Manual Checks           | AI-Powered 24/7              |
+| **Dispute Resolution**  | Expensive Legal Process | Automated Blockchain         |
+| **Global Reach**        | Jurisdiction Limited    | Borderless Protection        |
+| **Cost Efficiency**     | High Legal Fees         | Fraction of Traditional Cost |
 
-   ```bash
-   git clone https://github.com/your-org/storysentinel.git
-   cd storysentinel
-   ```
+</div>
 
-2. **Install dependencies**
+---
 
-   ```bash
-   # Install root dependencies
-   npm install
+## 🚀 Platform Functionality & User Workflows
 
-   # Install frontend dependencies
-   cd frontend && npm install
+<div align="center">
 
-   # Install backend dependencies
-   cd ../backend && npm install
+### 📱 **Complete User Journey Overview**
 
-   # Install contract dependencies
-   cd ../contracts && npm install
-   ```
+_From Discovery to Protection - Everything You Need in One Platform_
 
-3. **Environment Setup**
+</div>
 
-   ```bash
-   # Copy environment files
-   cp backend/.env.example backend/.env
-   cp frontend/.env.example frontend/.env
+### 🔍 **1. IP Asset Discovery & Portfolio Management**
 
-   # Edit the .env files with your API keys and configurations
-   ```
+#### **Browse All IP Assets on Story Protocol**
 
-4. **Start Development Servers**
+<div align="center">
 
-   ```bash
-   # Start backend (from root directory)
-   npm run dev:backend
+<img src="assets/IpAssetMange.png" alt="StorySentinel" />
+</div>
 
-   # Start frontend (in another terminal)
-   npm run dev:frontend
-   ```
+**Key Features:**
 
-5. **Access the Application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
-   - API Health Check: http://localhost:5000/health
+- 🌐 **Multi-Network Support**: View IP assets from both Story Protocol Mainnet and Testnet
+- 🔍 **Advanced Filtering**: Filter by type, status, creation date, and license terms
+- 📊 **Real-time Data**: Live updates from Story Protocol blockchain
+- 🔗 **Direct Integration**: One-click access to Story Protocol Explorer
+- 📈 **Portfolio Analytics**: Track your IP asset performance and value
+
+---
+
+### 🏗️ **2. IP Asset Creation & Registration Workflow**
+
+#### **Complete IP Registration Journey**
+
+<div align="center">
+<img src="assets/IpasseteCreation.png" alt="StorySentinel" />
+
+
+</div>
+
+**Step-by-Step Process:**
+
+<table>
+<tr>
+<td width="50%">
+
+#### **📋 Input Requirements**
+
+- **📄 Basic Information**
+  - Title and description
+  - IP type (image, video, audio, document)
+  - Creation date and location
+- **👥 Creator Details**
+  - Creator name and wallet address
+  - Contribution percentages
+  - Contact information
+- **📁 Media Files**
+  - Original content files
+  - Supporting documentation
+  - Preview images/thumbnails
+- **⚖️ License Terms**
+  - Commercial use permissions
+  - Derivative work rules
+  - Revenue sharing percentages
+
+</td>
+<td width="50%">
+
+#### **🔄 Automated Processing**
+
+- **🌐 IPFS Storage**
+  - Media files uploaded to decentralized storage
+  - Metadata stored as JSON with integrity hashes
+  - NFT-compatible metadata generation
+- **⛓️ Blockchain Registration**
+  - IP Asset minted as NFT on Story Protocol
+  - Immutable ownership records created
+  - License terms encoded in smart contracts
+- **🤖 AI Protection Setup**
+  - Yakoa monitoring initialization
+  - Content fingerprinting for detection
+  - Cross-platform scanning enabled
+- **📊 Portfolio Integration**
+  - Asset added to user dashboard
+  - Analytics tracking activated
+  - Alerts system configured
+
+</td>
+</tr>
+</table>
+
+---
+
+### ⚖️ **3. Dispute Management System**
+
+#### **Comprehensive Dispute Resolution Workflow**
+
+<div align="center">
+
+
+<img src="assets/IpDispute.png" alt="StorySentinel" />
+
+</div>
+
+**Dispute Types & Evidence Requirements:**
+
+<div align="center">
+
+| 🏷️ **Dispute Type**         | 📋 **Required Evidence**                                          | ⏱️ **Timeline** | 💰 **Fees** |
+| --------------------------- | ----------------------------------------------------------------- | --------------- | ----------- |
+| **Copyright Infringement**  | Original work proof, registration certificates, usage evidence    | 14-30 days      | 0.1 ETH     |
+| **Trademark Violation**     | Trademark certificates, brand usage docs, market confusion proof  | 21-45 days      | 0.15 ETH    |
+| **Patent Infringement**     | Patent documents, technical specifications, infringement analysis | 30-60 days      | 0.2 ETH     |
+| **Unauthorized Derivative** | Original work, derivative comparison, license violation proof     | 14-21 days      | 0.08 ETH    |
+
+</div>
+
+---
+
+### 🔍 **4. Yakoa-Powered Infringement Detection**
+
+#### **AI-Driven IP Protection System**
+
+<div align="center">
+
+<img src="assets/IpYakao.png" alt="StorySentinel" />
+
+</div>
+
+**Infringement Detection Features:**
+
+<table>
+<tr>
+<td width="33%">
+
+#### **🌐 Platform Coverage**
+
+- **Social Media**
+  - Instagram, TikTok, YouTube
+  - Twitter, Facebook, LinkedIn
+- **E-commerce**
+  - Amazon, eBay, Etsy
+  - Shopify stores, marketplace platforms
+- **Content Platforms**
+  - Medium, Substack, WordPress
+  - Stock photo sites, art platforms
+- **Custom Monitoring**
+  - User-specified websites
+  - API integration for proprietary platforms
+
+</td>
+<td width="33%">
+
+#### **🧠 AI Analysis Capabilities**
+
+- **Visual Similarity**
+  - Image recognition and matching
+  - Video frame analysis
+  - Logo and trademark detection
+- **Content Analysis**
+  - Text similarity scoring
+  - Audio fingerprinting
+  - Document structure comparison
+- **Context Understanding**
+  - Usage context analysis
+  - Commercial vs. fair use detection
+  - Brand impersonation identification
+
+</td>
+<td width="33%">
+
+#### **📊 Confidence Scoring**
+
+- **High Confidence (90-100%)**
+  - Exact or near-exact matches
+  - Clear commercial infringement
+  - Automatic alert generation
+- **Medium Confidence (70-89%)**
+  - Substantial similarity detected
+  - Requires human review
+  - Potential fair use considerations
+- **Low Confidence (50-69%)**
+  - Minor similarities found
+  - Likely false positive
+  - Continued monitoring only
+
+</td>
+</tr>
+</table>
+
+---
+
+### 🔄 **Integration Flow Summary**
+
+<div align="center">
+
+
+<img src="assets/IpUserFlow.png" alt="StorySentinel" />
+</div>
+
+## 🏗️ System Architecture & Design
+
+
+
+### 🛠️ Technology Integration Deep Dive
+
+#### 🌟 **Story Protocol Integration**
+
+- **Primary Role**: Blockchain infrastructure for immutable IP asset storage and management
+- **Key Features**:
+  - **🏛️ IP Asset Storage**: All IP assets stored directly on Story blockchain
+  - **🔐 Immutable Records**: Permanent, tamper-proof ownership and metadata
+  - **⚖️ Dispute Resolution**: Decentralized arbitration with blockchain evidence
+  - **💰 Automated Royalties**: Smart contract-based revenue distribution
+  - **🔗 Cross-chain Assets**: Interoperable IP assets across networks
+- **Status**: ✅ **Fully Integrated** - Production ready
+- **Data Storage**: All IP assets, ownership records, and dispute data stored on blockchain
+
+#### 🤖 **Yakoa AI Integration**
+
+- **Primary Role**: Intelligent content monitoring and infringement detection
+- **Key Features**:
+  - Multi-platform content scanning (100+ platforms)
+  - Advanced similarity analysis using deep learning
+  - Real-time alert generation with confidence scoring
+  - Adaptive learning for improved accuracy over time
+- **Status**: ✅ **Fully Integrated** - Production ready
+
+#### ⛓️ **Smart Contracts Development Status**
+
+- **Current Phase**: 🚧 **Active Development**
+- **Planned Features**:
+  - Enhanced IP Asset NFTs with advanced metadata
+  - Automated dispute resolution mechanisms
+  - Royalty splitting and distribution contracts
+  - Governance tokens for platform decisions
+- **Timeline**: Q3 2025 estimated completion
+- **Integration**: Will extend existing Story Protocol functionality
+
+### 🛠️ Technology Stack Integration
+
+| Layer               | Technology         | Purpose                     | Integration Status      |
+| ------------------- | ------------------ | --------------------------- | ----------------------- |
+| **Frontend**        | React + TypeScript | User Interface              | ✅ **Production Ready** |
+| **Backend**         | Node.js + Express  | API & Business Logic        | ✅ **Production Ready** |
+| **Blockchain**      | Story Protocol     | IP Assets & Dispute Storage | ✅ **Integrated**       |
+| **AI Engine**       | Yakoa Platform     | Content Detection           | ✅ **Integrated**       |
+| **Storage**         | IPFS + MongoDB     | Files + App Metadata        | ✅ **Operational**      |
+| **Smart Contracts** | Solidity (Hardhat) | Custom IP Logic             | 🚧 **In Development**   |
+
+### 🔗 Story Protocol Integration
+
+StorySentinel leverages Story Protocol as the foundational blockchain infrastructure for:
+
+- **📜 IP Asset Storage**: All IP assets are stored directly on the Story blockchain as immutable records
+- **🔐 Ownership Verification**: Blockchain-based proof of creation and ownership
+- **⚖️ Dispute Resolution**: Decentralized arbitration system with on-chain evidence
+- **💰 Revenue Sharing**: Automated licensing and royalty distribution via smart contracts
+- **🔗 Interoperability**: Cross-platform IP asset recognition and portability
+
+**📊 Data Architecture:**
+
+- **On-Chain**: IP assets, ownership records, disputes, licensing agreements
+- **Off-Chain**: Application metadata, user preferences, cached data (MongoDB)
+- **Decentralized**: Content files and media stored on IPFS
+
+### 🤖 Yakoa AI Integration
+
+Yakoa's advanced AI capabilities power our monitoring and detection systems:
+
+- **👁️ Multi-Platform Monitoring**: Continuous scanning across social media, marketplaces, and content platforms
+- **🧠 Deep Learning Analysis**: Advanced similarity detection using machine learning models
+- **⚡ Real-Time Processing**: Instant infringement alerts and notifications
+- **📊 Confidence Scoring**: AI-powered similarity ratings for detected matches
+- **🔄 Continuous Learning**: Adaptive algorithms that improve over time
+
+### 🚧 Smart Contracts Development
+
+Our custom smart contracts (currently in development) will provide:
+
+- **🏷️ IP Asset NFTs**: Enhanced ERC-721 tokens representing IP assets
+- **🔐 Access Control**: Role-based permissions for IP management
+- **💎 Revenue Distribution**: Automated royalty and licensing payments
+- **🔄 Upgradeability**: Proxy pattern for contract evolution
+- **⚖️ Governance**: Community-driven platform decisions
+
+## 🚀 Quick Start Guide
+
+<div align="center">
+
+### 🛠️ **Get StorySentinel Running in 5 Minutes**
+
+</div>
+
+### 📋 Prerequisites
+
+<table>
+<tr>
+<td width="25%"><strong>🟢 Node.js</strong></td>
+<td width="25%"><strong>📦 Package Manager</strong></td>
+<td width="25%"><strong>🗄️ Database</strong></td>
+<td width="25%"><strong>🔧 Development Tools</strong></td>
+</tr>
+<tr>
+<td>v18.0+ Required</td>
+<td>npm or yarn</td>
+<td>MongoDB (local/cloud)</td>
+<td>Git, VS Code</td>
+</tr>
+</table>
+
+### ⚡ One-Command Setup
+
+```bash
+# Clone and setup everything
+git clone https://github.com/your-org/StorySentinel.git
+cd StorySentinel
+npm run setup:all
+```
+
+### 🔧 Manual Installation
+
+<details>
+<summary><strong>📁 1. Clone Repository</strong></summary>
+
+```bash
+git clone https://github.com/your-org/storysentinel.git
+cd storysentinel
+```
+
+</details>
+
+<details>
+<summary><strong>📦 2. Install Dependencies</strong></summary>
+
+```bash
+# Install all workspace dependencies
+npm install
+
+# Or install individually
+cd frontend && npm install
+cd ../backend && npm install
+cd ../contracts && npm install
+```
+
+</details>
+
+<details>
+<summary><strong>⚙️ 3. Environment Configuration</strong></summary>
+
+```bash
+# Copy environment templates
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+
+# Configure your API keys
+nano frontend/.env  # Add your API keys
+nano backend/.env   # Add your credentials
+```
+
+**Required Environment Variables:**
+
+```env
+# Frontend (.env)
+VITE_THIRDWEB_CLIENT_ID=your_thirdweb_client_id
+VITE_STORY_API_KEY=your_story_protocol_key
+VITE_YAKOA_API_KEY=your_yakoa_api_key
+
+# Backend (.env)
+MONGODB_URI=mongodb://localhost:27017/storysentinel
+STORY_API_KEY=your_story_protocol_key
+YAKOA_API_KEY=your_yakoa_api_key
+JWT_SECRET=your_jwt_secret
+```
+
+</details>
+
+<details>
+<summary><strong>🚀 4. Launch Development Environment</strong></summary>
+
+```bash
+# Start all services concurrently
+npm run dev
+
+# Or start individually
+npm run dev:backend
+npm run dev:frontend
+```
+
+</details>
+
+### 🌐 Access Your Application
+
+<div align="center">
+
+| Service         | URL                                     | Status           |
+| --------------- | --------------------------------------- | ---------------- |
+| **🖥️ Frontend** | [localhost:5173](http://localhost:5173) | User Interface   |
+| **🔌 API**      | [localhost:5000](http://localhost:3000) | Backend Services |
+
+</div>
+
+### ✅ Verify Installation
+
+```bash
+# Health check all services
+npm run health:check
+
+# Expected output:
+# ✅ Frontend: Running on port 3000
+# ✅ Backend: Running on port 5000
+# ✅ Database: Connected to MongoDB
+# ✅ Story Protocol: API Connected
+# ✅ Yakoa: AI Service Connected
+```
+
+### 🔒 Security Setup
+
+1. **Generate JWT Secret**: `openssl rand -hex 32`
+2. **Setup MongoDB Auth**: Enable authentication in production
+3. **Configure CORS**: Whitelist your domain in backend config
+4. **Environment Security**: Never commit `.env` files
+
+### 🐛 Troubleshooting
+
+<details>
+<summary><strong>Common Issues & Solutions</strong></summary>
+
+**Port Already in Use:**
+
+```bash
+# Kill processes on ports
+npx kill-port 3000 5000 8545
+```
+
+**MongoDB Connection Error:**
+
+```bash
+# Start MongoDB service
+sudo systemctl start mongod  # Linux
+brew services start mongodb  # macOS
+```
+
+**API Key Issues:**
+
+- Verify your Story Protocol API key at [Story Developer Portal](https://story.foundation)
+- Check Yakoa API access at [Yakoa Dashboard](https://yakoa.io)
+
+</details>
 
 ## 📖 API Documentation
 
@@ -178,107 +621,90 @@ StorySentinel is a next-generation intellectual property protection platform tha
 - `POST /api/story/dispute/submit` - Submit dispute
 - `GET /api/story/royalties/:ipId` - Get royalty information
 
-## 🔧 Configuration
+## 🤝 Contributing to StorySentinel
 
-### Environment Variables
+<div align="center">
 
-#### Backend Configuration
+**🎯 We Welcome All Contributors!**
 
-```env
-# Server
-PORT=5000
-NODE_ENV=development
-FRONTEND_URL=http://localhost:3000
+[![Contributors](https://img.shields.io/badge/Contributors-Welcome-brightgreen?style=for-the-badge)](CONTRIBUTING.md)
+[![Pull Requests](https://img.shields.io/badge/PRs-Welcome-blue?style=for-the-badge)](https://github.com/your-org/StorySentinel/pulls)
+[![Issues](https://img.shields.io/badge/Issues-Open-red?style=for-the-badge)](https://github.com/your-org/StorySentinel/issues)
 
-# Database
-MONGODB_URI=mongodb://localhost:27017/storysentinel
+</div>
 
-# Story Protocol
-STORY_PROTOCOL_API_KEY=your-api-key
-STORY_PROTOCOL_NETWORK=testnet
-STORY_PROTOCOL_RPC_URL=https://rpc.odyssey.storyrpc.io
+### 🛠️ Development Workflow
 
-# Yakoa API
-YAKOA_API_KEY=your-yakoa-api-key
-YAKOA_API_BASE_URL=https://api.yakoa.com/v1
-```
+1. **🍴 Fork** the repository
+2. **🌟 Create** a feature branch: `git checkout -b feature/amazing-feature`
+3. **✨ Implement** your changes with tests
+4. **📝 Commit** with conventional commits: `git commit -m 'feat: add amazing feature'`
+5. **🚀 Push** to branch: `git push origin feature/amazing-feature`
+6. **📬 Open** a Pull Request with detailed description
 
-#### Frontend Configuration
+### 🎯 Contribution Areas
 
-```env
-# React App
-REACT_APP_API_URL=http://localhost:5000/api
-REACT_APP_APP_NAME=StorySentinel
-
-# Story Protocol
-REACT_APP_STORY_PROTOCOL_NETWORK=testnet
-REACT_APP_STORY_PROTOCOL_CHAIN_ID=1516
-```
-
-## 🧪 Testing
-
-```bash
-# Run backend tests
-cd backend && npm test
-
-# Run frontend tests
-cd frontend && npm test
-
-# Run contract tests
-cd contracts && npm test
-```
-
-## 🚀 Deployment
-
-### Backend Deployment
-
-1. Build the application: `npm run build`
-2. Set production environment variables
-3. Deploy to your preferred platform (AWS, Railway, Render, etc.)
-
-### Frontend Deployment
-
-1. Build the React app: `npm run build`
-2. Deploy to CDN or static hosting (Vercel, Netlify, etc.)
-
-### Smart Contract Deployment
-
-```bash
-cd contracts
-npx hardhat run scripts/deploy.ts --network storyTestnet
-```
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and add tests
-4. Commit your changes: `git commit -m 'Add amazing feature'`
-5. Push to the branch: `git push origin feature/amazing-feature`
-6. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-- **Documentation**: [docs.storysentinel.com](https://docs.storysentinel.com)
-- **Discord**: [Join our community](https://discord.gg/storysentinel)
-- **Email**: support@storysentinel.com
-- **Issues**: [GitHub Issues](https://github.com/your-org/storysentinel/issues)
-
-## 🙏 Acknowledgments
-
-- [Story Protocol](https://storyprotocol.xyz) for blockchain IP infrastructure
-- [Yakoa](https://yakoa.com) for AI-powered content detection
-- [OpenZeppelin](https://openzeppelin.com) for secure smart contract libraries
-- The open-source community for amazing tools and libraries
+- 🐛 **Bug Fixes**: Help us squash bugs and improve stability
+- ✨ **New Features**: Implement exciting new functionality
+- 📚 **Documentation**: Improve guides, tutorials, and API docs
+- 🎨 **UI/UX**: Enhance user interface and experience
+- 🔧 **DevOps**: Improve CI/CD, deployment, and infrastructure
+- 🧪 **Testing**: Increase test coverage and quality
 
 ---
 
-**Built with ❤️ for creators and innovators worldwide**
+## 🏆 Acknowledgments & Credits
+
+<div align="center">
+
+### 🤝 **Powered by Industry Leaders**
+
+</div>
+
+<table>
+<tr>
+<td align="center" width="25%">
+
+<strong>Story Protocol</strong><br/>
+<small>Blockchain IP Infrastructure</small>
+
+</td>
+<td align="center" width="25%">
+<strong>Yakoa AI</strong><br/>
+<small>Content Detection Engine</small>
+</td>
+<td align="center" width="25%">
+<strong>Thirdweb</strong><br/>
+<small>Web3 Development</small>
+</td>
+</tr>
+</table>
+
+### 🙏 Special Thanks
+
+- **Story Protocol Team** for pioneering blockchain IP infrastructure
+- **Yakoa AI Team** for advanced AI-powered content detection
+
+---
+
+<div align="center">
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+### 🚀 **Ready to Protect Your IP?**
+
+<a href="https://storysentinel.com" target="_blank">
+<img src="https://img.shields.io/badge/Get_Started-Now-2563eb?style=for-the-badge&logo=rocket" alt="Get Started Now"/>
+</a>
+
+**Built with ❤️ for creators, innovators, and visionaries worldwide**
+
+---
+
+<sub>© 2025 StorySentinel. Empowering creators through blockchain and AI.</sub>
+
+</div>
